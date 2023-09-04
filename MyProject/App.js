@@ -15,6 +15,7 @@ import NewsComponent from './src/Components/NewsComponent';
 const Stack = createStackNavigator();
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ChatDetailComponent from './src/Components/ChatDetailComponent';
 
 
 const Tab = createBottomTabNavigator();
@@ -57,7 +58,7 @@ const HomeTabs = ({navigation}) => {
               <Image
                 source={require('./src/Images/chat.png')}
                 style={{width: 20, height: 20}}
-                resizeMode="stretch"
+               
               />
             ),
             headerRight: () => (
@@ -211,6 +212,7 @@ const HomeTabs = ({navigation}) => {
             
           }}
         />
+      
       </Tab.Navigator>
     </View>
   );
@@ -218,27 +220,39 @@ const HomeTabs = ({navigation}) => {
 
 const HomeMesenger = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Drawer.Navigator
         screenOptions={{headerShown: false}}
         initialRouteName="Đoạn Chat">
-        <Stack.Screen name="Đoạn Chat" component={HomeTabs} options={{
-        
-          
+        <Drawer.Screen name="Đoạn Chat" component={HomeTabs} options={{        
         }}/>
         <Drawer.Screen name="Chat" component={ChatComponent} options={{
-         
         }} />
         <Drawer.Screen name="Call" component={CallComponent} />
         <Drawer.Screen name="PhoneBook" component={PhoneBookComponent} />
         <Drawer.Screen name="News" component={NewsComponent} />
+        <Stack.Screen name="ChatDetail" component={ChatDetailComponent}   options={{ headerShown:false
+  }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
 };
 
+
+
+
 const App = () => {
-  return <HomeMesenger />;
+  return (
+    <View style={{flex:1}}>
+    
+<NavigationContainer >
+<Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeMesenger}/>
+
+    </Stack.Navigator>
+</NavigationContainer>
+    </View>
+  )
 };
 
 export default App;
